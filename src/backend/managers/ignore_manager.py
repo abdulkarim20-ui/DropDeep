@@ -1,7 +1,7 @@
 import fnmatch
 import os
 import json
-from src.config import resource_path
+from src.config import resource_path, get_config_dir
 
 # Robust default patterns for ignoring files/folders
 # These include system files, build artifacts, and sensitive data not suitable for LLMs
@@ -27,8 +27,7 @@ DEFAULT_PATTERNS = [
 
 class IgnoreManager:
     def __init__(self, use_persistence=True):
-        # .../src/backend/managers/ignore_manager.py -> .../src/backend/managers -> .../src/backend -> .../src -> root
-        self.persistence_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'ignore_patterns.json')
+        self.persistence_file = os.path.join(get_config_dir(), 'ignore_patterns.json')
         self.default_patterns = set(DEFAULT_PATTERNS)
         self.user_patterns = set()
         self.session_patterns = set()  # Temporary patterns for this run only
