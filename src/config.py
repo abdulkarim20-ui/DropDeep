@@ -68,3 +68,21 @@ def resource_path(relative_path: str) -> str:
         base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     return os.path.join(base_path, relative_path)
+
+def get_config_dir() -> str:
+    """ 
+    Get the directory where config files should be stored.
+    For Portable Mode: 'User_Data' folder next to the executable.
+    """
+    if getattr(sys, 'frozen', False):
+        # Running as executable (PyInstaller)
+        base_dir = os.path.dirname(sys.executable)
+    else:
+        # Running from source (Root of repo)
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    config_dir = os.path.join(base_dir, 'User_Data')
+    if not os.path.exists(config_dir):
+        os.makedirs(config_dir, exist_ok=True)
+        
+    return config_dir
