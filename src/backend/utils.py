@@ -36,3 +36,19 @@ def sanitize_content(text):
             flags=re.IGNORECASE
         )
     return text
+
+def get_unique_path(path):
+    """
+    If path exists, appends an incrementing number to the filename until a unique path is found.
+    Example: 'file.txt' -> 'file1.txt' -> 'file2.txt'
+    """
+    if not os.path.exists(path):
+        return path
+    
+    base, ext = os.path.splitext(path)
+    counter = 1
+    while True:
+        new_path = f"{base}{counter}{ext}"
+        if not os.path.exists(new_path):
+            return new_path
+        counter += 1
