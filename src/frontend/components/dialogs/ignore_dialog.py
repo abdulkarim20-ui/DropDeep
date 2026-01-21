@@ -112,84 +112,88 @@ class IgnorePatternsDialog(QDialog):
         self.layout.addLayout(header_layout)
 
         # 2. Search & Add Bar
-        search_box = QHBoxLayout()
+        search_add_master = QHBoxLayout()
+        search_add_master.setSpacing(16)
+        search_add_master.setContentsMargins(0, 0, 0, 0)
+        
+        # -- Left Column: Search --
+        search_col = QVBoxLayout()
+        search_col.setSpacing(4)
+        
         self.txt_search = QLineEdit()
-        self.txt_search.setPlaceholderText("Search patterns...")
+        self.txt_search.setPlaceholderText("Search...")
         self.txt_search.setFixedHeight(38)
+        self.txt_search.setObjectName("searchBar")
         self.txt_search.textChanged.connect(self.on_search_changed)
         
-        # Add search icon
         search_icon_path = resource_path("assets/search.png")
         if os.path.exists(search_icon_path):
-            search_action = self.txt_search.addAction(QIcon(search_icon_path), QLineEdit.LeadingPosition)
-            search_action.triggered.connect(lambda: None)  # Icon only, no action
+            self.txt_search.addAction(QIcon(search_icon_path), QLineEdit.LeadingPosition)
+        
+        search_col.addWidget(self.txt_search)
+        search_col.addStretch() # Aligns search bar to the top matching the add field
+        
+        # -- Right Column: Add --
+        add_col = QVBoxLayout()
+        add_col.setSpacing(4)
+        
+        add_input_row = QHBoxLayout()
+        add_input_row.setSpacing(8)
         
         self.txt_add = QLineEdit()
         self.txt_add.setPlaceholderText("Add new (e.g. *.tmp)")
         self.txt_add.setFixedHeight(38)
         self.txt_add.returnPressed.connect(self.add_pattern)
         
-        # Example Label
-        lbl_examples = QLabel("Support glob patterns (e.g. *.log, dist/, node_modules)")
-        lbl_examples.setStyleSheet("color: #9CA3AF; font-size: 11px; margin-left: 4px;")
-        
-        input_layout_v = QVBoxLayout()
-        input_layout_v.setSpacing(2)
-        input_layout_v.addWidget(self.txt_add)
-        input_layout_v.addWidget(lbl_examples)
-        
         self.btn_add = QPushButton("Add")
-        self.btn_add.setFixedSize(60, 38)
+        self.btn_add.setFixedSize(65, 38)
         self.btn_add.setCursor(Qt.PointingHandCursor)
         self.btn_add.clicked.connect(self.add_pattern)
         
-        input_style = """
-            QLineEdit {
-                border: 1px solid #E5E7EB;
-                border-radius: 8px;
-                padding-left: 8px;
-                padding-right: 12px;
-                background-color: #F9FAFB;
-                font-size: 13px;
-            }
-            QLineEdit:focus {
-                border: 1px solid #007AFF;
-                background-color: #FFFFFF;
-            }
-        """
+        add_input_row.addWidget(self.txt_add, 1)
+        add_input_row.addWidget(self.btn_add)
         
-        input_style_normal = """
+        lbl_examples = QLabel("Support glob patterns (e.g. *.log, dist/, node_modules)")
+        lbl_examples.setStyleSheet("color: #9CA3AF; font-size: 11px; margin-left: 2px;")
+        
+        add_col.addLayout(add_input_row)
+        add_col.addWidget(lbl_examples)
+        
+        # Unified Styling
+        input_style = """
             QLineEdit {
                 border: 1px solid #E5E7EB;
                 border-radius: 8px;
                 padding: 0 12px;
                 background-color: #F9FAFB;
                 font-size: 13px;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            QLineEdit#searchBar {
+                padding-left: 30px;
             }
             QLineEdit:focus {
                 border: 1px solid #007AFF;
                 background-color: #FFFFFF;
             }
-        """
-        self.txt_search.setStyleSheet(input_style)  # Has icon padding
-        self.txt_add.setStyleSheet(input_style_normal)  # Normal padding
-        self.btn_add.setStyleSheet("""
-            QPushButton {
+            QPushButton#addBtn {
                 background-color: #007AFF;
                 color: white;
                 border-radius: 8px;
                 border: none;
-                font-weight: 600;
+                font-weight: 700;
                 font-size: 13px;
             }
-            QPushButton:hover { background-color: #0069D9; }
-        """)
+            QPushButton#addBtn:hover { background-color: #0069D9; }
+        """
+        self.txt_search.setStyleSheet(input_style)
+        self.txt_add.setStyleSheet(input_style)
+        self.btn_add.setObjectName("addBtn")
+        self.btn_add.setStyleSheet(input_style)
         
-        search_box.addWidget(self.txt_search, 1)
-        search_box.addSpacing(8)
-        search_box.addLayout(input_layout_v, 1)
-        search_box.addWidget(self.btn_add)
-        self.layout.addLayout(search_box)
+        search_add_master.addLayout(search_col, 2)
+        search_add_master.addLayout(add_col, 3)
+        self.layout.addLayout(search_add_master)
 
         # 3. Content Area (Categorized)
         self.scroll = QScrollArea()
