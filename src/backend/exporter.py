@@ -9,7 +9,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.colors import black
-from src.backend.utils import get_file_heading, sanitize_content
+from src.backend.utils import get_file_heading, sanitize_content, get_unique_path
 
 logger = logging.getLogger(__name__)
 
@@ -407,7 +407,7 @@ def export_data(data, target_dir, formats):
     
     if 'json' in formats:
         try:
-            out = os.path.join(target_dir, f"{base_name}.json")
+            out = get_unique_path(os.path.join(target_dir, f"{base_name}.json"))
             with open(out, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4, ensure_ascii=False, default=str)
             results.append(out)
@@ -417,7 +417,7 @@ def export_data(data, target_dir, formats):
         
     if 'txt_tree' in formats:
         try:
-            out = os.path.join(target_dir, f"{base_name}.tree.txt")
+            out = get_unique_path(os.path.join(target_dir, f"{base_name}.tree.txt"))
             with open(out, 'w', encoding='utf-8') as f:
                 f.write(generate_tree_text(data))
             results.append(out)
@@ -427,7 +427,7 @@ def export_data(data, target_dir, formats):
 
     if 'txt_full' in formats:
         try:
-            out = os.path.join(target_dir, f"{base_name}.full.txt")
+            out = get_unique_path(os.path.join(target_dir, f"{base_name}.full.txt"))
             with open(out, 'w', encoding='utf-8') as f:
                 f.write(generate_full_text(data))
             results.append(out)
@@ -437,7 +437,7 @@ def export_data(data, target_dir, formats):
         
     if 'pdf' in formats:
         try:
-            out = os.path.join(target_dir, f"{base_name}.pdf")
+            out = get_unique_path(os.path.join(target_dir, f"{base_name}.pdf"))
             generate_pdf(data, out)
             results.append(out)
         except Exception as e:
