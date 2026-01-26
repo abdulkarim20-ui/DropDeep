@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication
+from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QTreeWidgetItemIterator
 from PyQt5.QtCore import Qt, QDateTime, QLocale, QSettings, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont
 from src.config import resource_path
@@ -285,6 +285,9 @@ class FileTreeWidget(QTreeWidget):
         """
         Populate the tree with dictionary data from scanner.
         """
+        # Save expansion state
+        expanded_paths = self.get_expanded_paths()
+        
         self.clear()
         if not data:
             return
@@ -325,13 +328,6 @@ class FileTreeWidget(QTreeWidget):
                     font.setWeight(QFont.DemiBold)  # Semi-bold
                     item.setFont(0, font)  # Name column only
                 
-
-
-                # Restricted file check
-                # Restricted file check - visual indication logic moved or removed since columns are gone
-                # if child['type'] == 'file' and child.get('content') is None and size == "":
-                #      item.setText(2, "Restricted")
-
                 # Icons
                 if child['type'] == 'folder':
                     item.setIcon(0, self.folder_icon)
@@ -357,8 +353,15 @@ class FileTreeWidget(QTreeWidget):
         
         self.addTopLevelItem(root_item)
         add_items(root_item, data)
-        root_item.setExpanded(True)
-        # self.resizeColumnToContents(0) # Logic removed primarily to respect Stretch mode and user preference
+        
+        # Restore expansion state
+        if expanded_paths:
+            self.restore_expanded_paths(expanded_paths)
+            # Ensure root is expanded if it was (or if we want to force it initially)
+            # But restoring state should cover it if it was open.
+            # If it's a fresh load (empty paths), force root open:
+        else:
+             root_item.setExpanded(True)
         
         # Max width cap for Type column - Removed
         # max_type_width = 260
@@ -394,3 +397,30 @@ class FileTreeWidget(QTreeWidget):
         # Iterate top level items (root is usually one, but loop to be safe)
         for i in range(self.topLevelItemCount()):
             check_item(self.topLevelItem(i))
+
+    def get_expanded_paths(self):
+        """Return a set of absolute paths for currently expanded items."""
+        expanded = set()
+        iterator = QTreeWidgetItemIterator(self)
+        while iterator.value():
+            item = iterator.value()
+            if item.isExpanded():
+                data = item.data(0, Qt.UserRole)
+                if data and "abs_path" in data:
+                    expanded.add(data["abs_path"])
+            iterator += 1
+        return expanded
+
+    def restore_expanded_paths(self, expanded_paths):
+        """Restore expansion state based on a set of paths."""
+        if not expanded_paths:
+            return
+            
+        iterator = QTreeWidgetItemIterator(self)
+        while iterator.value():
+            item = iterator.value()
+            data = item.data(0, Qt.UserRole)
+            if data and "abs_path" in data:
+                if data["abs_path"] in expanded_paths:
+                    item.setExpanded(True)
+            iterator += 1
