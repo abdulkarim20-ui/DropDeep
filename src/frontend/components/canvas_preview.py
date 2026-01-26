@@ -397,3 +397,32 @@ class CanvasPreview(QWidget):
             
             # Ensure visible
             self.stack.setCurrentWidget(self.tabs)
+
+    def reload_file_content(self, path, content=None):
+        """Update the content of an open file (e.g. from external change)."""
+        widget = self.open_files.get(path)
+        if not widget:
+            return
+
+        if isinstance(widget, QsciScintilla):
+            if content is None:
+                return
+            
+            # Save state
+            line, index = widget.getCursorPosition()
+            first_line = widget.firstVisibleLine()
+            
+            # Check if content actually changed to avoid flicker
+            if widget.text() != content:
+                widget.setText(content)
+                
+                # Restore state
+                widget.setCursorPosition(line, index)
+                # setFirstVisibleLine not always available or behaves differently in some versions
+                # verticalScrollBar().setValue(...) is more robust if needed, but try method first
+                widget.setFirstVisibleLine(first_line)
+            
+        elif isinstance(widget, ZoomableImageViewer):
+            if path and os.path.exists(path):
+                pixmap = QPixmap(path)
+                widget.set_image(pixmap)
