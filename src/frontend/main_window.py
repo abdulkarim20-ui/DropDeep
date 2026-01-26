@@ -19,6 +19,7 @@ from src.backend.managers.ignore_manager import IgnoreManager
 from src.frontend.components.advanced_ignore import AdvancedIgnoreWidget
 from src.backend.managers.recent_manager import load_recent, add_recent
 from src.frontend.components.recent_folders import RecentFoldersWidget
+from src.backend.managers.watcher_manager import WatcherManager
 from src.config import resource_path
 import os
 import subprocess
@@ -197,6 +198,11 @@ class MainWindow(QMainWindow):
         self.current_data = None
         self.scan_thread = None
         self.selected_folder_path = None # Track selected folder
+        
+        # Watcher
+        self.watcher = WatcherManager()
+        self.watcher.file_changed.connect(self.on_file_changed)
+        self.watcher.directory_changed.connect(self.on_directory_changed)
 
     def center_window(self):
         """Centers the window on the primary screen and ensures it fits."""
@@ -994,6 +1000,10 @@ class MainWindow(QMainWindow):
         
         abs_path = self.get_abs_path_from_node(file_node)
         self.canvas_preview.preview_file(file_node, abs_path)
+        
+        # Start watching this file for content changes
+        if abs_path:
+            self.watcher.watch_file(abs_path)
 
     def start_scan_loader(self):
         self.drop_zone.start_scan_loader()
@@ -1036,6 +1046,10 @@ class MainWindow(QMainWindow):
     def on_scan_finished(self, data):
         self.current_data = data
         self.tree.populate(data)
+        
+        # Start watching the project root
+        if self.selected_folder_path:
+            self.watcher.start_watching_project(self.selected_folder_path)
         
         if 'name' in data:
              self.search_bar.setPlaceholderText(f"Search {data['name']}")
@@ -1408,3 +1422,53 @@ class MainWindow(QMainWindow):
         layout.addLayout(btn_layout)
         
         dialog.exec_()
+
+    def on_file_changed(self, path):
+        """Handle external file changes."""
+        # Update Canvas Content if open
+        # We need to detect if it's a file we can read text from or just reload image
+        try:
+             # Check if it's currently open in canvas before reading
+            if path in self.canvas_preview.open_files:
+                # If image, we don't need to read content
+                if any(path.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.webp']):
+                    self.canvas_preview.reload_file_content(path)
+                else:
+                    # Text file
+                    try:
+                        with open(path, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                        self.canvas_preview.reload_file_content(path, content)
+                    except UnicodeDecodeError:
+                        pass # Binary file?
+        except Exception as e:
+            print(f"Error reading changed file {path}: {e}")
+
+    def on_directory_changed(self, path):
+        """Handle external directory structure changes."""
+        self.quiet_reload_scan()
+
+    def quiet_reload_scan(self):
+        """Re-scan without blocking UI (for auto-updates)."""
+        if not self.selected_folder_path:
+            return
+            
+        # Avoid overlapping scans or interrupting active user scan
+        if self.scan_thread and self.scan_thread.isRunning():
+            return
+            
+        # We use a new thread instance
+        self.scan_thread = ScanThread(self.selected_folder_path, self.ignore_manager)
+        
+        def on_finished(data):
+            self.current_data = data
+            self.tree.populate(data)
+            
+            search_text = self.search_bar.text()
+            if search_text:
+                self.tree.filter_items(search_text)
+            
+            self.token_btn.update_estimate()
+                
+        self.scan_thread.scan_finished.connect(on_finished)
+        self.scan_thread.start()
