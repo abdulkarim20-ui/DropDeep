@@ -1,8 +1,0 @@
-{
-    "user_patterns": [],
-    "removed_patterns": [
-        "*.png",
-        "*.jpg"
-    ],
-    "toggle_enabled": true
-}
