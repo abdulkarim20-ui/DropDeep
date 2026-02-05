@@ -1,14 +1,11 @@
 <div align="center">
   <img src="assets/app_icon.png" alt="Crawlsee Logo" width="120" />
 
-  <h1 style="margin-bottom: 0.2em;">Crawlsee</h1>
-
   <p style="font-size: 1.1em; color: #666; margin-top: 0;">
     Full Project Context for AI, Documentation &amp; Backup
   </p>
 </div>
 
-# Crawlsee — Full Project Context for AI, Documentation & Backup
 
 ## What Is Crawlsee?
 
@@ -380,4 +377,5 @@ https://github.com/material-extensions/vscode-material-icon-theme
 Created and maintained by **Abdulkarim Shaikh**
 
 - GitHub: [https://github.com/abdulkarim20-ui](https://github.com/abdulkarim20-ui)
+
 
