@@ -64,7 +64,7 @@ def resource_path(relative_path: str) -> str:
         base_path = sys._MEIPASS
     except Exception:
         # Resolve to project root (parent of 'src' folder where this config.py resides)
-        # Path: DropDeep/src/config.py -> root is DropDeep/
+        # Path: Crawlsee/src/config.py -> root is Crawlsee/
         base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     return os.path.join(base_path, relative_path)

@@ -11,14 +11,14 @@ def main():
     app = QApplication(sys.argv)
     
     # Set Metadata
-    app.setApplicationName("DropDeep")
+    app.setApplicationName("Crawlsee")
     app.setApplicationVersion("1.0.0")
 
     # Windows Taskbar Icon Fix
     if sys.platform.startswith("win"):
         try:
             import ctypes
-            myappid = 'structurepro.dropdeep.1.0.0'
+            myappid = 'structurepro.crawlsee.1.0.0'
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
         except Exception:
             pass

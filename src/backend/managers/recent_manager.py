@@ -1,7 +1,7 @@
 import json, os
 from src.config import get_config_dir
 
-RECENT_FILE = os.path.join(get_config_dir(), "dropdeep_recent.json")
+RECENT_FILE = os.path.join(get_config_dir(), "crawlsee_recent.json")
 
 def load_recent():
     if not os.path.exists(RECENT_FILE):

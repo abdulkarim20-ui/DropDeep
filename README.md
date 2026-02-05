@@ -1,28 +1,28 @@
 <div align="center">
-  <img src="assets/app_white.png" alt="DropDeep Logo" width="120"/>
+  <img src="assets/app_white.png" alt="Crawlsee Logo" width="120"/>
 </div>
 
-# DropDeep — Full Project Context for AI, Documentation & Backup
+# Crawlsee — Full Project Context for AI, Documentation & Backup
 
-## What Is DropDeep?
+## What Is Crawlsee?
 
-**DropDeep** is a desktop tool that scans any project folder and exports its **full structure + code** in a clean, readable format.
+**Crawlsee** is a desktop tool that scans any project folder and exports its **full structure + code** in a clean, readable format.
 
 It is built to solve one core problem:
 
 > **AI and humans fail to understand projects when context is incomplete or unstructured.**
 
-DropDeep prepares **complete, controlled, AI-ready project context** — without zipping folders or uploading files one by one.
+Crawlsee prepares **complete, controlled, AI-ready project context** — without zipping folders or uploading files one by one.
 
 Everything runs **locally**.
 
 ---
 
-## ⭐ Top 3 Core Features (Why People Use DropDeep)
+## ⭐ Top 3 Core Features (Why People Use Crawlsee)
 
 ### 🥇 1. AI-Ready Full Project Context (No Confusion)
 
-DropDeep exports:
+Crawlsee exports:
 
 * full folder tree
 * exact file paths & names
@@ -35,7 +35,7 @@ AI understands the *whole project*, not random snippets.
 
 ### 🥈 2. Token Estimation Before Export (AI-Safe)
 
-DropDeep estimates how many **AI tokens** your export will use **before you export**.
+Crawlsee estimates how many **AI tokens** your export will use **before you export**.
 
 **Why it matters:**
 You avoid AI errors like *"input too long"* or silent truncation.
@@ -55,9 +55,9 @@ Cleaner exports, fewer tokens, better AI results.
 
 ---
 
-## What Problems Does DropDeep Solve?
+## What Problems Does Crawlsee Solve?
 
-| Problem                    | How DropDeep Fixes It          |
+| Problem                    | How Crawlsee Fixes It          |
 | -------------------------- | ------------------------------ |
 | AI gets confused           | Full structure + code in order |
 | Zips are useless for AI    | AI-ready text output           |
@@ -71,7 +71,7 @@ Cleaner exports, fewer tokens, better AI results.
 
 ### 🏠 Clean Start Window
 
-DropDeep greets you with a minimal, drag-and-drop interface:
+Crawlsee greets you with a minimal, drag-and-drop interface:
 
 ![Start Window](docs/Start_window.png)
 
@@ -164,7 +164,7 @@ AI reads text in *tokens* (not pages or files). Large text = more tokens.
 * Too many tokens → AI rejects or cuts input
 * Cut input → wrong answers
 
-**What DropDeep does:**
+**What Crawlsee does:**
 
 * estimates tokens before export
 * helps you choose safer formats (tree vs full)
@@ -188,11 +188,11 @@ You export only what AI can safely understand.
 
 *Smart Destination Selection and Export Notifications accessible from the More menu.*
 
-DropDeep doesn't just work for you; it **understands** you.
+Crawlsee doesn't just work for you; it **understands** you.
 
 * **Smart Destination Selection**: 
-  - **Learns Your Habits**: If you export to the same folder 5+ times, DropDeep asks if you want to make it your default export location for that project.
-  - **Adapts to Change**: If you later switch folders manually (even with Smart Selection off), DropDeep detects the shift after 3+ exports and offers to update your default.
+  - **Learns Your Habits**: If you export to the same folder 5+ times, Crawlsee asks if you want to make it your default export location for that project.
+  - **Adapts to Change**: If you later switch folders manually (even with Smart Selection off), Crawlsee detects the shift after 3+ exports and offers to update your default.
   - **Per-Project Memory**: Each project folder remembers its own preferred export destination separately.
   - **Result**: No more navigating through folders every time—just hit export, and it goes to the right place automatically.
 
@@ -210,9 +210,9 @@ DropDeep doesn't just work for you; it **understands** you.
 
 ### 🔄 Live Monitoring & Passive Sync
 
-No more manual reloading. DropDeep keeps its finger on the pulse of your project:
+No more manual reloading. Crawlsee keeps its finger on the pulse of your project:
 
-* **File System Watcher**: Detects if you create, move, or edit any file in your project folder while DropDeep is open.
+* **File System Watcher**: Detects if you create, move, or edit any file in your project folder while Crawlsee is open.
 * **Auto-Sync**: The UI refreshes the directory tree and previews automatically, ensuring you're always looking at the latest version of your code.
 * **Throttled Reloads**: Intelligent cooling periods ensure mass file operations (like `git pull` or `npm install`) don't slow down the UI.
 
@@ -243,7 +243,7 @@ Experience a professional, high-fidelity interface designed for maximum develope
 
 ## Common Use Cases
 
-| Use Case               | How DropDeep Helps         |
+| Use Case               | How Crawlsee Helps         |
 | ---------------------- | -------------------------- |
 | AI project explanation | Full context in one export |
 | Refactoring with AI    | No missing files           |
@@ -253,7 +253,7 @@ Experience a professional, high-fidelity interface designed for maximum develope
 
 ---
 
-## What DropDeep Is NOT
+## What Crawlsee Is NOT
 
 * ❌ Not an IDE
 * ❌ Not a code editor
@@ -265,9 +265,9 @@ It does **one job**:
 
 ---
 
-## Why DropDeep Instead of Zipping?
+## Why Crawlsee Instead of Zipping?
 
-| Zip File           | DropDeep            |
+| Zip File           | Crawlsee            |
 | ------------------ | ------------------- |
 | AI can't read      | AI-ready text       |
 | Structure hidden   | Structure preserved |
@@ -285,8 +285,8 @@ It does **one job**:
 ### Setup
 
 ```bash
-git clone https://github.com/abdulkarim20-ui/dropdeep.git
-cd dropdeep
+git clone https://github.com/abdulkarim20-ui/crawlsee.git
+cd crawlsee
 pip install -r requirements.txt
 python main.py
 ```
@@ -295,7 +295,7 @@ python main.py
 
 ## Usage
 
-1. Launch DropDeep
+1. Launch Crawlsee
 2. Drag & drop a project folder (or browse)
 3. Review structure and preview files
 4. Select export formats
@@ -306,7 +306,7 @@ python main.py
 ## Project Structure
 
 ```
-DropDeep/
+Crawlsee/
 ├── assets/
 ├── src/
 │   ├── backend/
@@ -337,11 +337,11 @@ Runs **fully offline**.
 ## Philosophy
 
 > **AI is only as good as the context you give it.**
-> DropDeep exists to give *clean, complete, controlled context*.
+> Crawlsee exists to give *clean, complete, controlled context*.
 
 ---
 
-## Who Should Use DropDeep?
+## Who Should Use Crawlsee?
 
 * Developers using AI seriously
 * Teams documenting real projects

@@ -24,4 +24,4 @@ If you experience or witness unacceptable behavior, please contact the project m
 
 ---
 
-We aim to keep DropDeep welcoming for everyone.
+We aim to keep Crawlsee welcoming for everyone.

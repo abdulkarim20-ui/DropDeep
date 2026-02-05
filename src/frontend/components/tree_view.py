@@ -11,7 +11,7 @@ class FileTreeWidget(QTreeWidget):
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.settings = QSettings("StructurePro", "DropDeep")
+        self.settings = QSettings("StructurePro", "Crawlsee")
         self.icon_manager = IconManager()
         
         # Load Chevron Icons for Tree

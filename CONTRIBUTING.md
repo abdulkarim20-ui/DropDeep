@@ -1,6 +1,6 @@
-# Contributing to DropDeep
+# Contributing to Crawlsee
 
-Thank you for your interest in contributing to DropDeep!
+Thank you for your interest in contributing to Crawlsee!
 
 ## Guidelines
 

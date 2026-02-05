@@ -149,7 +149,7 @@ class ScanThread(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("DropDeep")
+        self.setWindowTitle("Crawlsee")
         
         # Window size presets (single source of truth)
         self.HOME_WIDTH = 380
@@ -1532,7 +1532,7 @@ class MainWindow(QMainWindow):
         text_container.setSpacing(4)
         
         # App Name
-        name_label = QLabel("DropDeep")
+        name_label = QLabel("Crawlsee")
         name_label.setStyleSheet("font-size: 22px; font-weight: 800; color: #111827; background: transparent; border: none;")
         name_label.setAlignment(Qt.AlignCenter)
         text_container.addWidget(name_label)
