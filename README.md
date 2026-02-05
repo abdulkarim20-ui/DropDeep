@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/app_white.png" alt="Crawlsee Logo" width="120"/>
+  <img src="assets/app_icon.png" alt="Crawlsee Logo" width="120"/>
 </div>
 
 # Crawlsee — Full Project Context for AI, Documentation & Backup
