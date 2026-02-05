@@ -356,6 +356,19 @@ MIT License — free for personal and commercial use.
 
 ---
 
+## Icon Credits
+
+This project uses SVG icons derived from the
+Material Icon Theme for Visual Studio Code.
+
+Copyright (c) 2025 Material Extensions  
+License: MIT License
+
+Source:
+https://github.com/material-extensions/vscode-material-icon-theme
+
+---
+
 ## Author
 
 Created and maintained by **Abdulkarim Shaikh**
